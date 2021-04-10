@@ -1,3 +1,5 @@
+ansible_python_interpreter=/usr/bin/python3
 localhost
+
 #[servers]
 #10.1.44.20 ansible_ssh_user=user ansible_ssh_pass=password
