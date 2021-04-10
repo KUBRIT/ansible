@@ -30,7 +30,7 @@
 
   - name: copy wallpaper 2
     copy:
-      src: files/wallpaper2.png
+      src: files/wallpaper2.jpg
       dest: /usr/share/backgrounds/ansible-wallpaper2.jpg
       owner: root
       group: root
@@ -51,7 +51,7 @@
     become_user: bkraszewski
     dconf:
       key: "/backdrop/screen0/monitorDP-1/workspace0/last-image"
-      value: "'/usr/share/backgrounds/xfce/ansible-wallpaper2.png'"
+      value: "'/usr/share/backgrounds/xfce/ansible-wallpaper2.jpg'"
 
   - name: set wallpaper position on external screen
     become_user: bkraszewski
