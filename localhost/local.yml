@@ -8,7 +8,6 @@
     package:
       name:
         - python3-psutil
-        - dbconf-cli
         - mc
         - tmux
         - htop
