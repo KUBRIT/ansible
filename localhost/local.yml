@@ -1,0 +1,84 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+  - name: install packages
+    package:
+      name:
+        - python3-psutil
+        - dbconf-cli
+        - mc
+        - tmux
+        - htop
+        # - vim-nox
+        - openvpn
+        - cpu-x
+        - meld
+        - bpytop
+
+  - name: copy wallpaper 1
+    copy:
+      src: files/wallpaper1.png
+      dest: /usr/share/backgrounds/ansible-wallpaper1.png
+      owner: root
+      group: root
+
+  - name: copy wallpaper 2
+    copy:
+      src: files/wallpaper2.png
+      dest: /usr/share/backgrounds/ansible-wallpaper2.png
+      owner: root
+      group: root
+
+  - name: set wallpaper on Laptop
+    become_user: bkraszewski
+    dconf:
+      key: "/backdrop/screen0/monitoreDP-1/workspace0/last-image"
+      value: "'/usr/share/backgrounds/xfce/ansible-wallpaper1.png'"
+
+  - name: set wallpaper position on Laptop
+    become_user: bkraszewski
+    dconf:
+      key: "/backdrop/screen0/monitoreDP-1/workspace0/image-style"
+      value: "'zoom'"
+
+  - name: set wallpaper on external screen
+    become_user: bkraszewski
+    dconf:
+      key: "/backdrop/screen0/monitorDP-1/workspace0/last-image"
+      value: "'/usr/share/backgrounds/xfce/ansible-wallpaper2.png'"
+
+  - name: set wallpaper position on external screen
+    become_user: bkraszewski
+    dconf:
+      key: "/backdrop/screen0/monitorDP-1/workspace0/image-style"
+      value: "'zoom'"
+
+  - name: copy .bashrc file
+    copy:
+      src: files/bashrc
+      dest: /home/bkraszewski/.bashrc
+      owner: bkraszewski
+      group: bkraszewski
+
+  - name: add ansible user
+    user:
+      name: velociraptor
+      system: yes
+
+  - name: set up sudo for ansible user
+    copy:
+      src: files/sudoer_velociraptor
+      dest: /etc/sudoers.d/velociraptor
+      owner: root
+      group: root
+      mode: 0440
+
+  - name: add ansible-pull cron job
+    cron:
+      name: ansible auto-provision
+      user: velociraptor
+      minute: "*/10"
+      job: ansible-pull -o -U https://github.com/KUBRIT/ansible.git
