@@ -15,6 +15,10 @@
         - openvpn
         - cpu-x
         - meld
+
+  - name: Install bpytop
+    community.general.snap:
+      name:
         - bpytop
 
   - name: copy wallpaper 1
