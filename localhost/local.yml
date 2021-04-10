@@ -15,11 +15,15 @@
         - openvpn
         - cpu-x
         - meld
+    tags:
+    - basic
 
   - name: Install bpytop
     community.general.snap:
       name:
         - bpytop
+    tags:
+    - basic
 
   - name: copy wallpaper 1
     copy:
@@ -27,6 +31,8 @@
       dest: /usr/share/backgrounds/ansible-wallpaper1.png
       owner: root
       group: root
+    tags:
+    - basic
 
   - name: copy wallpaper 2
     copy:
@@ -40,13 +46,17 @@
     dconf:
       key: "/backdrop/screen0/monitoreDP-1/workspace0/last-image"
       value: "'/usr/share/backgrounds/xfce/ansible-wallpaper1.png'"
+    tags:
+    - basic
 
   - name: set wallpaper position on Laptop
     become_user: bkraszewski
     dconf:
       key: "/backdrop/screen0/monitoreDP-1/workspace0/image-style"
       value: "'zoom'"
-
+    tags:
+    - basic
+    
   - name: set wallpaper on external screen
     become_user: bkraszewski
     dconf:
