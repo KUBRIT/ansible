@@ -25,49 +25,70 @@
     tags:
     - basic
 
-  - name: copy wallpaper 1
+  - name: copy wallpaper 1 for Laptop
     copy:
       src: files/wallpaper1.png
-      dest: /usr/share/backgrounds/ansible-wallpaper1.png
+      dest: /usr/share/backgrounds/xfce/ansible-wallpaper1.png
       owner: root
       group: root
+    tags:
+    - basic
+ 
+  - name: set wallpaper 1 on Laptop
+    become: True
+    become_user: bkraszewski
+    xfconf:
+      channel: "xfce4-desktop"
+      property: "/backdrop/screen0/monitoreDP-1/workspace0/last-image"
+      state: present
+      value_type: string
+      value: "/usr/share/backgrounds/xfce/ansible-wallpaper1.png"
+    tags:
+    - basic
+
+  - name: set wallpaper 1 position on Laptop
+    become: True
+    become_user: bkraszewski
+    xfconf:
+      channel: "xfce4-desktop"
+      property: /backdrop/screen0/monitoreDP-1/workspace0/image-style
+      state: present
+      value_type: string
+      value: "zoom"
     tags:
     - basic
 
   - name: copy wallpaper 2
     copy:
       src: files/wallpaper2.jpg
-      dest: /usr/share/backgrounds/ansible-wallpaper2.jpg
+      dest: /usr/share/backgrounds/xfce/ansible-wallpaper2.jpg
       owner: root
       group: root
-
-  - name: set wallpaper on Laptop
-    become_user: bkraszewski
-    dconf:
-      key: "/backdrop/screen0/monitoreDP-1/workspace0/last-image"
-      value: "'/usr/share/backgrounds/xfce/ansible-wallpaper1.png'"
     tags:
     - basic
 
-  - name: set wallpaper position on Laptop
+  - name: set wallpaper 2 on external screen
+    become: True
     become_user: bkraszewski
-    dconf:
-      key: "/backdrop/screen0/monitoreDP-1/workspace0/image-style"
-      value: "'zoom'"
+    xfconf:
+      channel: "xfce4-desktop"
+      property: "/backdrop/screen0/monitorDP-1/workspace0/last-image"
+      value_type: string
+      value: "/usr/share/backgrounds/xfce/ansible-wallpaper2.jpg"
     tags:
     - basic
-    
-  - name: set wallpaper on external screen
+ 
+  - name: set wallpaper 2 position on external screen
+    become: True
     become_user: bkraszewski
-    dconf:
-      key: "/backdrop/screen0/monitorDP-1/workspace0/last-image"
-      value: "'/usr/share/backgrounds/xfce/ansible-wallpaper2.jpg'"
-
-  - name: set wallpaper position on external screen
-    become_user: bkraszewski
-    dconf:
-      key: "/backdrop/screen0/monitorDP-1/workspace0/image-style"
-      value: "'zoom'"
+    xfconf:
+      channel: "xfce4-desktop"
+      property: /backdrop/screen0/monitorDP-1/workspace0/image-style
+      state: present
+      value_type: string
+      value: "zoom"
+    tags:
+    - basic
 
   - name: copy .bashrc file
     copy:
