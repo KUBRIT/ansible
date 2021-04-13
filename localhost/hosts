@@ -1,0 +1,5 @@
+[xubuntu]
+10.1.44.39 ansible_ssh_user=ansible_user ansible_ssh_pass=ansible_pass
+
+[xubuntu:vars]
+ansible_python_interpreter=/usr/bin/python3
