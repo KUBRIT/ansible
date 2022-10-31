@@ -123,7 +123,7 @@ fi
 
 alias "vpnconnect"='sudo openvpn --config ~/openvpnconfig.ovpn'
 alias "dataserver"='ssh dataserver'
-alias "publicipscan"='sudo tcpdump -i enp0s31f6 host <your_public_ip>'
+alias "publicipscan"='sudo tcpdump -i enp0s31f6 host $1'
 
 # monitor settings
 alias "m1"='xrandr --output eDP-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off'
@@ -173,4 +173,18 @@ function create_ssl () {
     openssl genpkey -algorithm RSA -out $APP_NAME.key -outform PEM -pkeyopt rsa_keygen_bits:2048
     openssl req -new -key $APP_NAME.key -out $APP_NAME.csr
     openssl x509 -req -in $APP_NAME.csr -CA self-signed-ca-cert.crt -CAkey private-ca.key -CAcreateserial -out $APP_NAME.crt -days 365 -sha256
+}
+
+# plex subtitle encoding
+function subtitle-encode() {
+    if [ "$1" = "" ]; then
+        echo "Enter subtitle filename to convert"
+        exit 1
+    else
+        filename=$1
+        filename_fixed=${filename%.*}".pol.srt"
+        iconv -f WINDOWS-1250 -t UTF-8 $1 > ${filename_fixed}
+        chmod u+r
+        echo "[ OK ] Created: $filename_fixed"
+    fi
 }

@@ -1,0 +1,6 @@
+[docker-servers]
+10.1.10.247 ansible_ssh_user=ansible_user ansible_ssh_pass=ansible_pass
+
+
+[ubuntu]
+docker-server   ansible_host=10.1.10.247
